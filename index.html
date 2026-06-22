@@ -1,11 +1,648 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name | Personal Homepage</title>
+
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #3b82f6;
+      --accent-light: #eff6ff;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 24px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 48px;
+    }
+
+    /* 左侧个人信息栏 */
+    .sidebar {
+      position: sticky;
+      top: 48px;
+      height: fit-content;
+    }
+
+    .profile-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      object-fit: cover;
+      margin-bottom: 24px;
+      border: 1px solid var(--line);
+    }
+
+    .name {
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 750;
+      margin-bottom: 8px;
+    }
+
+    .title {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 15px;
+    }
+
+    .nav {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .nav a {
+      color: var(--muted);
+    }
+
+    .nav a:hover {
+      color: var(--accent);
+    }
+
+    /* 右侧内容 */
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 42px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
+    }
+
+    .hero-label {
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 650;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      line-height: 1.18;
+      margin-bottom: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 720px;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.035);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-header h2 {
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-kicker {
+      color: var(--muted);
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .about p {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .research-item,
+    .project-item,
+    .experience-item,
+    .publication-item,
+    .news-item {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      background: #fff;
+    }
+
+    .research-item h3,
+    .project-item h3,
+    .experience-item h3,
+    .publication-item h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .research-item p,
+    .project-item p,
+    .experience-item p,
+    .publication-item p,
+    .news-item p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .paper-links,
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      color: var(--muted);
+      background: #fafafa;
+      font-size: 13px;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .news-date {
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      padding: 24px;
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 28px 18px;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .profile-card {
+        display: grid;
+        grid-template-columns: 96px 1fr;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .avatar {
+        width: 96px;
+        height: 96px;
+        margin-bottom: 0;
+      }
+
+      .links,
+      .nav {
+        grid-column: 1 / -1;
+      }
+
+      .hero {
+        padding: 30px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .news-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+
 <body>
-<h1>Hello World</h1>
-<h1>I love the World</h1>
-<h1>Welcome to my website!</h1>
-<h1>I love myself!</h1>
-<h1>One should not abandon a childhood sweetheart.</h1>
-<p>I'm hosted with GitHub Pages.</p>
+  <main class="page">
+
+    <!-- 左侧个人信息 -->
+    <aside class="sidebar">
+      <div class="profile-card">
+        <!-- 换成你自己的头像路径 -->
+        <img src="assets/avatar.jpg" alt="Profile photo" class="avatar" />
+
+        <div>
+          <div class="tag">Personal Homepage</div>
+          <h1 class="name">Your Name</h1>
+          <p class="title">
+            Researcher in CAD Geometry Generation, B-rep Modeling, and NURBS-based Generative Models.
+          </p>
+        </div>
+
+        <div class="links">
+          <a href="mailto:your.email@example.com">Email</a>
+          <a href="https://github.com/yourname" target="_blank">GitHub</a>
+          <a href="https://scholar.google.com/" target="_blank">Google Scholar</a>
+          <a href="assets/cv.pdf" target="_blank">Download CV</a>
+        </div>
+
+        <nav class="nav">
+          <a href="#about">About</a>
+          <a href="#research">Research</a>
+          <a href="#publications">Publications</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#awards">Awards</a>
+          <a href="#news">News</a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- 右侧内容 -->
+    <div class="content">
+
+      <!-- 顶部介绍 -->
+      <header class="hero">
+        <div class="hero-label">CAD · B-rep · NURBS · Diffusion Models</div>
+        <h1>Building generative models for valid and editable CAD geometry.</h1>
+        <p>
+          I am interested in CAD representation learning, boundary representation generation,
+          NURBS-based geometry modeling, and robust geometric validation. My current work focuses
+          on generating valid B-rep solids by decomposing topology and geometry generation.
+        </p>
+      </header>
+
+      <!-- About -->
+      <section id="about" class="about">
+        <div class="section-header">
+          <h2>About</h2>
+          <span class="section-kicker">overview</span>
+        </div>
+
+        <p>
+          I am a researcher working on generative models for CAD geometry. My research explores how
+          deep learning models can generate structured, valid, and editable boundary representations.
+        </p>
+
+        <p>
+          Recently, I have been working on diffusion-based B-rep generation and NURBS representation
+          learning. I am especially interested in improving NURBS legality, watertightness, and
+          post-processing efficiency in CAD generation pipelines.
+        </p>
+      </section>
+
+      <!-- Research -->
+      <section id="research">
+        <div class="section-header">
+          <h2>Research Interests</h2>
+          <span class="section-kicker">what I study</span>
+        </div>
+
+        <div class="grid">
+          <div class="research-item">
+            <h3>B-rep Generation</h3>
+            <p>
+              Topology-aware generation of CAD boundary representations, including vertices, edges,
+              faces, loops, and solid structures.
+            </p>
+          </div>
+
+          <div class="research-item">
+            <h3>NURBS Representation Learning</h3>
+            <p>
+              Learning structured NURBS parameters such as control points, weights, knot vectors,
+              masks, and valid parameter lengths.
+            </p>
+          </div>
+
+          <div class="research-item">
+            <h3>Geometric Validity</h3>
+            <p>
+              Improving legality, watertightness, and reconstruction robustness with explicit
+              constraints and OpenCascade-based validation.
+            </p>
+          </div>
+
+          <div class="research-item">
+            <h3>AI for CAD</h3>
+            <p>
+              Applying diffusion models, VAEs, and representation learning to engineering design,
+              CAD reconstruction, and shape synthesis.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Publications -->
+      <section id="publications">
+        <div class="section-header">
+          <h2>Publications</h2>
+          <span class="section-kicker">selected works</span>
+        </div>
+
+        <div class="publication-item">
+          <h3>Title of Your Paper</h3>
+          <div class="meta">
+            Your Name, Coauthor A, Coauthor B · Conference / Journal · 2026
+          </div>
+          <p>
+            A diffusion-based framework for B-rep generation with structured NURBS parameterization
+            and efficient post-processing.
+          </p>
+          <div class="paper-links">
+            <a href="#">PDF</a>
+            <a href="#">Code</a>
+            <a href="#">Project</a>
+            <span class="pill">CAD</span>
+            <span class="pill">Diffusion</span>
+            <span class="pill">NURBS</span>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="publication-item">
+          <h3>Another Paper Title</h3>
+          <div class="meta">
+            Your Name, Coauthor A · Workshop / Preprint · 2025
+          </div>
+          <p>
+            Short description of the paper. Explain the problem, method, and contribution in one or
+            two sentences.
+          </p>
+          <div class="paper-links">
+            <a href="#">PDF</a>
+            <a href="#">Code</a>
+            <span class="pill">Geometry</span>
+            <span class="pill">Learning</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects">
+        <div class="section-header">
+          <h2>Projects</h2>
+          <span class="section-kicker">selected projects</span>
+        </div>
+
+        <div class="grid">
+          <div class="project-item">
+            <h3>NURBS-VAE</h3>
+            <p>
+              A structured VAE for modeling NURBS surfaces with control points, weights, knot vectors,
+              and explicit validity constraints.
+            </p>
+            <div class="project-links">
+              <a href="#">GitHub</a>
+              <a href="#">Demo</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <h3>B-rep Diffusion Generator</h3>
+            <p>
+              A cascade diffusion framework for generating CAD geometry under topology constraints,
+              including vertices, edges, and surface geometry.
+            </p>
+            <div class="project-links">
+              <a href="#">GitHub</a>
+              <a href="#">Project Page</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <h3>OpenCascade Validation Toolkit</h3>
+            <p>
+              Tools for checking STEP validity, watertightness, solid construction, wire ordering,
+              triangulation, and geometric errors.
+            </p>
+            <div class="project-links">
+              <a href="#">GitHub</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <h3>CAD Dataset Processing</h3>
+            <p>
+              Data processing scripts for CAD models, including STEP parsing, B-rep extraction,
+              feature normalization, and geometry statistics.
+            </p>
+            <div class="project-links">
+              <a href="#">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience -->
+      <section id="experience">
+        <div class="section-header">
+          <h2>Experience</h2>
+          <span class="section-kicker">education & work</span>
+        </div>
+
+        <div class="experience-item">
+          <h3>Your University / Institute</h3>
+          <div class="meta">Graduate Student / Research Assistant · 2023 — Present</div>
+          <p>
+            Working on generative CAD modeling, B-rep generation, NURBS representation learning,
+            and geometric validation.
+          </p>
+        </div>
+
+        <br />
+
+        <div class="experience-item">
+          <h3>Previous Institution / Company</h3>
+          <div class="meta">Your Role · 2021 — 2023</div>
+          <p>
+            Briefly describe your previous research, engineering, or project experience here.
+          </p>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section id="skills">
+        <div class="section-header">
+          <h2>Skills</h2>
+          <span class="section-kicker">tools & topics</span>
+        </div>
+
+        <div class="skill-list">
+          <span class="pill">Python</span>
+          <span class="pill">PyTorch</span>
+          <span class="pill">OpenCascade</span>
+          <span class="pill">CAD</span>
+          <span class="pill">B-rep</span>
+          <span class="pill">NURBS</span>
+          <span class="pill">Diffusion Models</span>
+          <span class="pill">VAE</span>
+          <span class="pill">Geometry Processing</span>
+          <span class="pill">Git</span>
+        </div>
+      </section>
+
+      <!-- Awards -->
+      <section id="awards">
+        <div class="section-header">
+          <h2>Awards</h2>
+          <span class="section-kicker">honors</span>
+        </div>
+
+        <div class="news-list">
+          <div class="news-item">
+            <div class="news-date">2026</div>
+            <p>Paper accepted by Conference / Journal Name.</p>
+          </div>
+
+          <div class="news-item">
+            <div class="news-date">2025</div>
+            <p>Scholarship / Award / Competition Prize.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- News -->
+      <section id="news">
+        <div class="section-header">
+          <h2>News</h2>
+          <span class="section-kicker">updates</span>
+        </div>
+
+        <div class="news-list">
+          <div class="news-item">
+            <div class="news-date">Jun 2026</div>
+            <p>Started working on a journal extension of our B-rep generation method.</p>
+          </div>
+
+          <div class="news-item">
+            <div class="news-date">May 2026</div>
+            <p>Released code and project page for the NURBS-based B-rep generation framework.</p>
+          </div>
+
+          <div class="news-item">
+            <div class="news-date">Apr 2026</div>
+            <p>Our paper on CAD geometry generation was accepted.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        © 2026 Your Name. Built with HTML and CSS. Hosted on GitHub Pages.
+      </footer>
+    </div>
+  </main>
 </body>
 </html>
