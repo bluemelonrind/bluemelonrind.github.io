@@ -1,648 +1,997 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name | Personal Homepage</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qihong Cai — Dalian University of Technology</title>
+<meta name="description" content="Qihong Cai — Graduate student at Dalian University of Technology, working on AI agents and AI for computer-aided design (CAD), including generative modeling and geometry understanding." />
+<meta property="og:title" content="Qihong Cai — Dalian University of Technology" />
+<meta property="og:description" content="Focuses on AI agents and AI for computer-aided design (CAD), including generative modeling and geometry understanding." />
 
-  <style>
-    :root {
-      --bg: #f7f8fa;
-      --card: #ffffff;
-      --text: #1f2933;
-      --muted: #6b7280;
-      --line: #e5e7eb;
-      --accent: #3b82f6;
-      --accent-light: #eff6ff;
-      --max-width: 1120px;
+<!--
+  Type system — engineered cohesion, not predictable pairing:
+  · DM Serif Display   – architectural serif; used ONLY for the name and section headings
+  · DM Sans            – geometric sans for body; shares DNA without mirroring
+  · DM Mono            – metadata, dates, contact, code
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* Cool, precise — drafting room, not coffee shop */
+    --bg:         #fafaf8;
+    --surface:    #f3f1ec;
+    --ink:        #121212;
+    --ink-soft:   #3d3d3d;
+    --muted:      #6e6e6e;
+    --rule:       #dbd6ce;
+    --rule-light: #e8e4dc;
+
+    /* Drafting-blue accent — confident, not SaaS-electric */
+    --accent:     #285fd9;
+    --accent-dim: #1e48a8;
+    --accent-bg:  rgba(40, 95, 217, 0.07);
+
+    --serif:  "DM Serif Display", "Iowan Old Style", Georgia, serif;
+    --sans:   "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    --mono:   "DM Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+
+    --max-width: 1240px;
+    --gap:       56px;
+    --gap-mobile: 32px;
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    background: var(--bg);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink-soft);
+    font-family: var(--sans);
+    font-size: 18px;
+    line-height: 1.65;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ─── Layout container ────────────────────────── */
+
+  .wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 80px 60px 120px;
+  }
+
+  @media (max-width: 700px) {
+    .wrap { padding: 40px 24px 80px; }
+  }
+
+  /* ─── HERO ────────────────────────────────────── */
+
+  header.hero {
+    margin-bottom: 80px;
+    position: relative;
+  }
+
+  /* Subtle geometric surface — faint parametric-mesh SVG behind the hero text.
+     The one atmospheric element on an otherwise restrained page. */
+  .hero-surface {
+    position: absolute;
+    right: -60px;
+    top: -40px;
+    width: 520px;
+    height: 380px;
+    pointer-events: none;
+    opacity: 0.18;
+    z-index: 0;
+  }
+  @media (max-width: 900px) {
+    .hero-surface { display: none; }
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Name row */
+  .name-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 36px;
+    margin-bottom: 28px;
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 4px;
+    object-fit: cover;
+    background: var(--rule-light);
+    flex-shrink: 0;
+    border: 1px solid var(--rule);
+  }
+
+  .name-block h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 88px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .name-block .zh {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 16px;
+    /* padding-top: 10px; */
+
+    vertical-align: bottom;
+    padding-top: 0;
+    padding-bottom: 8px;
+  }
+  .name-block .affiliation {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .name-block .affiliation a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--accent);
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .name-block .affiliation a:hover {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+  }
+  .name-block .affiliation .sep {
+    color: var(--rule);
+    margin: 0 10px;
+  }
+
+  @media (max-width: 640px) {
+    .name-block h1 { font-size: 46px; }
+    .name-block .zh { display: block; margin-left: 0; margin-top: 4px; padding-top: 0; font-size: 17px; }
+    .avatar { width: 80px; height: 80px; border-radius: 3px; }
+    .name-row { gap: 22px; }
+  }
+
+  /* Contact strip */
+  .contact-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin-bottom: 48px;
+    padding: 16px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .contact-strip a {
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    transition: color .2s ease;
+  }
+  .contact-strip a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 100%; bottom: -4px;
+    height: 2px;
+    background: var(--accent);
+    transition: right .3s cubic-bezier(.2,.8,.2,1);
+  }
+  .contact-strip a:hover { color: var(--accent); }
+  .contact-strip a:hover::after { right: 0; }
+
+  /* Hero thesis — the research statement, set large in the serif */
+  .hero-thesis {
+    font-family: var(--sans);
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+
+    /* font-family: var(--serif);
+    font-size: 34px;
+    line-height: 1.45;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    max-width: 900px; */
+  }
+  .hero-thesis p { margin-bottom: 18px; }
+  .hero-thesis p:last-child { margin-bottom: 0; }
+  .hero-thesis a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    transition: color .2s ease, background .2s ease;
+  }
+  .hero-thesis a:hover {
+    color: var(--accent);
+    background: var(--accent-bg);
+  }
+  .hero-thesis em {
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 700px) {
+    .hero-thesis { font-size: 24px; max-width: 100%; }
+  }
+
+  /* ─── Section pattern ─────────────────────────── */
+
+  section { margin-top: 88px; }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.025em;
+    margin-bottom: 36px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  /* Geometric section marker — references CAD bounding-box / blueprint grid */
+  h2::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2.5px solid var(--accent);
+    flex-shrink: 0;
+    transform: translateY(2px);
+  }
+
+  @media (max-width: 640px) {
+    h2 { font-size: 30px; margin-bottom: 24px; padding-bottom: 14px; }
+    h2::before { width: 11px; height: 11px; border-width: 2px; }
+  }
+
+  /* ─── Experience ──────────────────────────────── */
+
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule-light);
+    align-items: start;
+  }
+
+  /* 竖条动画 */
+  .exp-item {
+  position: relative;
+  overflow: visible;
+  }
+
+  /* 左侧 accent bar */
+  .exp-item::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .4s cubic-bezier(.2,.8,.2,1);
+    border-radius: 0 2px 2px 0;
+    opacity: 0.9;
+  }
+  
+
+  /* hover 激活 */
+  .exp-item:hover::before {
+    transform: scaleY(1);
+  }
+
+  
+  
+  .exp-item:first-child { padding-top: 0; }
+  .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .exp-meta {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    padding-top: 2px;
+  }
+  .exp-meta .date {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .exp-meta .org {
+    display: block;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .exp-body .exp-role {
+    font-family: var(--serif);
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .exp-body .exp-desc {
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .exp-item { grid-template-columns: 1fr; gap: 8px; padding: 22px 0; }
+    .exp-body .exp-role { font-size: 20px; }
+    .exp-body .exp-desc { font-size: 16px; }
+  }
+
+  /* ─── Projects ────────────────────────────────── */
+
+  .project-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule-light);
+    position: relative;
+  }
+  .project-card:first-child { padding-top: 0; }
+  .project-card:last-child { border-bottom: none; padding-bottom: 0; }
+
+  /* Left accent bar — like a selected edge in CAD */
+  .project-card::before {
+    content: "";
+    position: absolute;
+    left: -24px;
+    top: 28px;
+    bottom: 28px;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 0 2px 2px 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .project-card:first-child::before { top: 0; }
+  .project-card:last-child::before { bottom: 0; }
+  .project-card:hover::before { transform: scaleY(1); }
+
+  .project-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin-bottom: 12px;
+  }
+  .project-name {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .project-badge {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid rgba(40, 95, 217, 0.15);
+  }
+  .project-desc {
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 720px;
+  }
+
+  @media (max-width: 700px) {
+    .project-card { padding-left: 0; }
+    .project-card::before { left: -16px; }
+    .project-name { font-size: 22px; }
+  }
+
+  /* ─── Publications (commented out currently, styles preserved) ─── */
+
+  .pub-list { display: flex; flex-direction: column; }
+
+  .pub-item {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule-light);
+  }
+  .pub-item:first-child { padding-top: 0; }
+  .pub-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .pub-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1px solid rgba(40, 95, 217, 0.15);
+    margin-bottom: 14px;
+  }
+  .pub-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .pub-title a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    transition: color .2s ease, background .2s ease;
+  }
+  .pub-title a:hover {
+    color: var(--accent);
+    background: var(--accent-bg);
+  }
+  .pub-authors {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .pub-authors .me {
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--accent-bg);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+  .pub-venue {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+  .pub-venue a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--accent);
+    transition: color .2s ease;
+  }
+  .pub-venue a:hover { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .pub-title { font-size: 22px; }
+  }
+
+  /* ─── Awards (styles preserved for uncommenting) ─── */
+
+  .awards-subhead {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .awards-subhead::before {
+    content: "";
+    width: 8px; height: 8px;
+    background: var(--accent);
+  }
+  .awards-subhead--second { margin-top: 36px; }
+
+  .awards-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .awards-list li {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 24px;
+    padding: 14px 0;
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule-light);
+  }
+  .awards-list li:last-child { border-bottom: none; }
+  .awards-list .year {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+  }
+  .awards-list .for {
+    color: var(--muted);
+    font-size: 15px;
+    font-style: italic;
+  }
+
+  @media (max-width: 640px) {
+    .awards-list li { grid-template-columns: 56px 1fr; gap: 14px; font-size: 16px; }
+  }
+
+  /* ─── News / Timeline (styles preserved) ──────── */
+
+  .news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+  .news-list::before {
+    content: "";
+    position: absolute;
+    left: 110px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: var(--rule);
+  }
+  .news-list li {
+    display: grid;
+    grid-template-columns: 96px 28px 1fr;
+    gap: 0;
+    padding: 12px 0;
+    align-items: baseline;
+  }
+  .news-list .date {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    padding-top: 3px;
+  }
+  .news-list .dot {
+    width: 11px; height: 11px;
+    background: var(--bg);
+    border: 2px solid var(--ink);
+    margin: 7px auto 0;
+    grid-column: 2;
+    position: relative; z-index: 1;
+    box-shadow: 0 0 0 5px var(--bg);
+  }
+  .news-list li:first-child .dot {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .news-list .item {
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .news-list .item a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--accent);
+  }
+  .news-list .item a:hover { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .news-list::before { left: 70px; }
+    .news-list li { grid-template-columns: 66px 20px 1fr; }
+    .news-list .item { font-size: 16px; }
+  }
+
+  /* ─── Service ─────────────────────────────────── */
+
+  .service-list { list-style: none; padding: 0; margin: 0; }
+  .service-list li {
+    padding: 16px 0;
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid var(--rule-light);
+  }
+  .service-list li:last-child { border-bottom: none; }
+  .service-list .role-line { color: var(--ink); }
+  .service-list .date {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+
+  /* ─── Friends ─────────────────────────────────── */
+
+  .friends-list { list-style: none; padding: 0; margin: 0; }
+  .friends-list li {
+    padding: 12px 0;
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink-soft);
+  }
+  .friends-list a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--accent);
+    font-weight: 500;
+    transition: color .2s ease, background .2s ease;
+  }
+  .friends-list a:hover {
+    color: var(--accent);
+    background: var(--accent-bg);
+  }
+  .friends-list .note {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 15px;
+  }
+
+  /* ─── GitHub stars badge ──────────────────────── */
+
+  .meta-stars {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid rgba(40, 95, 217, 0.15);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: background .2s ease;
+  }
+  .meta-stars:hover { background: rgba(40, 95, 217, 0.13); }
+  .meta-stars .star-glyph { font-family: var(--sans); font-size: 12px; line-height: 1; }
+  .meta-stars .star-count { font-weight: 500; }
+
+  /* ─── Footer ──────────────────────────────────── */
+
+  footer {
+    margin-top: 100px;
+    padding-top: 24px;
+    border-top: 1px solid var(--ink);
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  footer a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    transition: color .2s ease, border-color .2s ease;
+  }
+  footer a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ─── Entrance animation ──────────────────────── */
+
+  @media (prefers-reduced-motion: no-preference) {
+    .wrap > * {
+      animation: rise .6s cubic-bezier(.2,.8,.2,1) backwards;
     }
+    header.hero           { animation-delay: .04s; }
+    section:nth-of-type(1) { animation-delay: .12s; }
+    section:nth-of-type(2) { animation-delay: .17s; }
+    section:nth-of-type(3) { animation-delay: .21s; }
+    section:nth-of-type(4) { animation-delay: .25s; }
+    section:nth-of-type(5) { animation-delay: .28s; }
+    section:nth-of-type(6) { animation-delay: .31s; }
+    section:nth-of-type(7) { animation-delay: .33s; }
+    footer                { animation-delay: .37s; }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    /* Hero surface — slow drift */
+    .hero-surface {
+      animation: drift 18s ease-in-out infinite;
     }
+  }
 
-    html {
-      scroll-behavior: smooth;
-    }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-    }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33%      { transform: translate(8px, -6px) rotate(0.5deg); }
+    66%      { transform: translate(-4px, 4px) rotate(-0.3deg); }
+  }
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
+  /* ─── Selection ───────────────────────────────── */
 
-    a:hover {
-      text-decoration: underline;
-    }
+  ::selection {
+    background: var(--accent-bg);
+    color: var(--ink);
+  }
 
-    .page {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 48px 24px;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 48px;
-    }
+  /* ─── Focus ───────────────────────────────────── */
 
-    /* 左侧个人信息栏 */
-    .sidebar {
-      position: sticky;
-      top: 48px;
-      height: fit-content;
-    }
-
-    .profile-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 28px;
-      object-fit: cover;
-      margin-bottom: 24px;
-      border: 1px solid var(--line);
-    }
-
-    .name {
-      font-size: 28px;
-      line-height: 1.2;
-      font-weight: 750;
-      margin-bottom: 8px;
-    }
-
-    .title {
-      color: var(--muted);
-      font-size: 15px;
-      margin-bottom: 20px;
-    }
-
-    .tag {
-      display: inline-block;
-      background: var(--accent-light);
-      color: var(--accent);
-      font-size: 13px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      margin-bottom: 18px;
-    }
-
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 15px;
-    }
-
-    .nav {
-      margin-top: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 14px;
-    }
-
-    .nav a {
-      color: var(--muted);
-    }
-
-    .nav a:hover {
-      color: var(--accent);
-    }
-
-    /* 右侧内容 */
-    .content {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 42px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
-    }
-
-    .hero-label {
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 650;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .hero h1 {
-      font-size: 42px;
-      line-height: 1.18;
-      margin-bottom: 18px;
-      letter-spacing: -0.03em;
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 17px;
-      max-width: 720px;
-    }
-
-    section {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 32px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.035);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 24px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .section-header h2 {
-      font-size: 22px;
-      letter-spacing: -0.02em;
-    }
-
-    .section-kicker {
-      color: var(--muted);
-      font-size: 13px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    }
-
-    .about p {
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .research-item,
-    .project-item,
-    .experience-item,
-    .publication-item,
-    .news-item {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 20px;
-      background: #fff;
-    }
-
-    .research-item h3,
-    .project-item h3,
-    .experience-item h3,
-    .publication-item h3 {
-      font-size: 17px;
-      margin-bottom: 8px;
-    }
-
-    .research-item p,
-    .project-item p,
-    .experience-item p,
-    .publication-item p,
-    .news-item p {
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .meta {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    .paper-links,
-    .project-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-      font-size: 14px;
-    }
-
-    .pill {
-      display: inline-block;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 4px 10px;
-      color: var(--muted);
-      background: #fafafa;
-      font-size: 13px;
-    }
-
-    .skill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .news-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .news-item {
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      gap: 18px;
-      align-items: start;
-    }
-
-    .news-date {
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 650;
-    }
-
-    footer {
-      color: var(--muted);
-      font-size: 14px;
-      text-align: center;
-      padding: 24px;
-    }
-
-    @media (max-width: 860px) {
-      .page {
-        grid-template-columns: 1fr;
-        gap: 28px;
-        padding: 28px 18px;
-      }
-
-      .sidebar {
-        position: static;
-      }
-
-      .profile-card {
-        display: grid;
-        grid-template-columns: 96px 1fr;
-        gap: 18px;
-        align-items: center;
-      }
-
-      .avatar {
-        width: 96px;
-        height: 96px;
-        margin-bottom: 0;
-      }
-
-      .links,
-      .nav {
-        grid-column: 1 / -1;
-      }
-
-      .hero {
-        padding: 30px;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .news-item {
-        grid-template-columns: 1fr;
-        gap: 6px;
-      }
-    }
-  </style>
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+</style>
 </head>
-
 <body>
-  <main class="page">
 
-    <!-- 左侧个人信息 -->
-    <aside class="sidebar">
-      <div class="profile-card">
-        <!-- 换成你自己的头像路径 -->
-        <img src="assets/avatar.jpg" alt="Profile photo" class="avatar" />
+<div class="wrap">
 
-        <div>
-          <div class="tag">Personal Homepage</div>
-          <h1 class="name">Your Name</h1>
-          <p class="title">
-            Researcher in CAD Geometry Generation, B-rep Modeling, and NURBS-based Generative Models.
+  <!-- ═══════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════ -->
+  <header class="hero">
+    <!-- Ghost geometry — abstract parametric surface suggesting a B-rep mesh -->
+    <svg class="hero-surface" viewBox="0 0 520 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g stroke="#285fd9" stroke-width="0.8" stroke-linecap="round" opacity="0.5">
+        <!-- Control mesh — horizontal curves -->
+        <path d="M0 60 Q130 40 260 70 Q390 100 520 80" stroke-dasharray="4 6" opacity="0.4"/>
+        <path d="M0 130 Q140 100 270 135 Q400 170 520 145" opacity="0.7"/>
+        <path d="M0 200 Q120 180 250 210 Q380 240 520 215" stroke-dasharray="3 5" opacity="0.5"/>
+        <path d="M0 270 Q150 245 280 275 Q410 305 520 280" opacity="0.6"/>
+        <path d="M0 340 Q130 320 260 345 Q390 370 520 350" stroke-dasharray="5 7" opacity="0.35"/>
+        <!-- Vertical flow lines -->
+        <path d="M80 0 Q100 120 80 240 Q60 360 90 380" opacity="0.4"/>
+        <path d="M200 0 Q180 130 200 260 Q220 370 210 380" stroke-dasharray="3 6" opacity="0.35"/>
+        <path d="M350 0 Q370 110 340 230 Q310 350 330 380" opacity="0.45"/>
+        <path d="M460 0 Q440 140 460 270 Q480 360 470 380" stroke-dasharray="4 5" opacity="0.3"/>
+      </g>
+    </svg>
+
+    <div class="hero-inner">
+      <div class="name-row">
+        <img
+          class="avatar"
+          src="assets/avatar.jpg"
+          alt="Qihong Cai"
+          onerror="this.style.background='#e8e4dc';this.removeAttribute('src');"
+        />
+        <div class="name-block">
+          <h1>Qihong Cai<span class="zh">蔡奇宏</span></h1>
+          <p class="affiliation">
+            Graduate student
+            <span class="sep">·</span>
+            Dalian University of Technology, School of Mathematical Sciences
+            <br />
+            Advised by
+            <a href="https://ieeexplore.ieee.org/author/37599917400?history=no&highlight=true&returnType=SEARCH&sortType=newest&pageNumber=1&searchWithin=%22Author%20Ids%22:37599917400&returnFacets=ALL"
+               target="_blank" rel="noopener">Prof. Xiuping Liu</a>
+            <span class="sep">·</span>
+            Class of 2027
           </p>
         </div>
-
-        <div class="links">
-          <a href="mailto:your.email@example.com">Email</a>
-          <a href="https://github.com/yourname" target="_blank">GitHub</a>
-          <a href="https://scholar.google.com/" target="_blank">Google Scholar</a>
-          <a href="assets/cv.pdf" target="_blank">Download CV</a>
-        </div>
-
-        <nav class="nav">
-          <a href="#about">About</a>
-          <a href="#research">Research</a>
-          <a href="#publications">Publications</a>
-          <a href="#projects">Projects</a>
-          <a href="#experience">Experience</a>
-          <a href="#awards">Awards</a>
-          <a href="#news">News</a>
-        </nav>
       </div>
-    </aside>
 
-    <!-- 右侧内容 -->
-    <div class="content">
+      <div class="contact-strip">
+        <a href="mailto:2790913492@mail.dlut.edu.cn">2790913492@mail.dlut.edu.cn</a>
+      </div>
 
-      <!-- 顶部介绍 -->
-      <header class="hero">
-        <div class="hero-label">CAD · B-rep · NURBS · Diffusion Models</div>
-        <h1>Building generative models for valid and editable CAD geometry.</h1>
+      <div class="hero-thesis">
         <p>
-          I am interested in CAD representation learning, boundary representation generation,
-          NURBS-based geometry modeling, and robust geometric validation. My current work focuses
-          on generating valid B-rep solids by decomposing topology and geometry generation.
+          My research focuses on <strong>AI agents</strong> and <strong>AI for computer-aided design</strong> —
+          generative modeling of B-rep geometry, NURBS parameterization, and
+          geometry understanding at the boundary of learning and precision surfaces.
         </p>
-      </header>
-
-      <!-- About -->
-      <section id="about" class="about">
-        <div class="section-header">
-          <h2>About</h2>
-          <span class="section-kicker">overview</span>
-        </div>
-
-        <p>
-          I am a researcher working on generative models for CAD geometry. My research explores how
-          deep learning models can generate structured, valid, and editable boundary representations.
-        </p>
-
-        <p>
-          Recently, I have been working on diffusion-based B-rep generation and NURBS representation
-          learning. I am especially interested in improving NURBS legality, watertightness, and
-          post-processing efficiency in CAD generation pipelines.
-        </p>
-      </section>
-
-      <!-- Research -->
-      <section id="research">
-        <div class="section-header">
-          <h2>Research Interests</h2>
-          <span class="section-kicker">what I study</span>
-        </div>
-
-        <div class="grid">
-          <div class="research-item">
-            <h3>B-rep Generation</h3>
-            <p>
-              Topology-aware generation of CAD boundary representations, including vertices, edges,
-              faces, loops, and solid structures.
-            </p>
-          </div>
-
-          <div class="research-item">
-            <h3>NURBS Representation Learning</h3>
-            <p>
-              Learning structured NURBS parameters such as control points, weights, knot vectors,
-              masks, and valid parameter lengths.
-            </p>
-          </div>
-
-          <div class="research-item">
-            <h3>Geometric Validity</h3>
-            <p>
-              Improving legality, watertightness, and reconstruction robustness with explicit
-              constraints and OpenCascade-based validation.
-            </p>
-          </div>
-
-          <div class="research-item">
-            <h3>AI for CAD</h3>
-            <p>
-              Applying diffusion models, VAEs, and representation learning to engineering design,
-              CAD reconstruction, and shape synthesis.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Publications -->
-      <section id="publications">
-        <div class="section-header">
-          <h2>Publications</h2>
-          <span class="section-kicker">selected works</span>
-        </div>
-
-        <div class="publication-item">
-          <h3>Title of Your Paper</h3>
-          <div class="meta">
-            Your Name, Coauthor A, Coauthor B · Conference / Journal · 2026
-          </div>
-          <p>
-            A diffusion-based framework for B-rep generation with structured NURBS parameterization
-            and efficient post-processing.
-          </p>
-          <div class="paper-links">
-            <a href="#">PDF</a>
-            <a href="#">Code</a>
-            <a href="#">Project</a>
-            <span class="pill">CAD</span>
-            <span class="pill">Diffusion</span>
-            <span class="pill">NURBS</span>
-          </div>
-        </div>
-
-        <br />
-
-        <div class="publication-item">
-          <h3>Another Paper Title</h3>
-          <div class="meta">
-            Your Name, Coauthor A · Workshop / Preprint · 2025
-          </div>
-          <p>
-            Short description of the paper. Explain the problem, method, and contribution in one or
-            two sentences.
-          </p>
-          <div class="paper-links">
-            <a href="#">PDF</a>
-            <a href="#">Code</a>
-            <span class="pill">Geometry</span>
-            <span class="pill">Learning</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Projects -->
-      <section id="projects">
-        <div class="section-header">
-          <h2>Projects</h2>
-          <span class="section-kicker">selected projects</span>
-        </div>
-
-        <div class="grid">
-          <div class="project-item">
-            <h3>NURBS-VAE</h3>
-            <p>
-              A structured VAE for modeling NURBS surfaces with control points, weights, knot vectors,
-              and explicit validity constraints.
-            </p>
-            <div class="project-links">
-              <a href="#">GitHub</a>
-              <a href="#">Demo</a>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <h3>B-rep Diffusion Generator</h3>
-            <p>
-              A cascade diffusion framework for generating CAD geometry under topology constraints,
-              including vertices, edges, and surface geometry.
-            </p>
-            <div class="project-links">
-              <a href="#">GitHub</a>
-              <a href="#">Project Page</a>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <h3>OpenCascade Validation Toolkit</h3>
-            <p>
-              Tools for checking STEP validity, watertightness, solid construction, wire ordering,
-              triangulation, and geometric errors.
-            </p>
-            <div class="project-links">
-              <a href="#">GitHub</a>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <h3>CAD Dataset Processing</h3>
-            <p>
-              Data processing scripts for CAD models, including STEP parsing, B-rep extraction,
-              feature normalization, and geometry statistics.
-            </p>
-            <div class="project-links">
-              <a href="#">GitHub</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Experience -->
-      <section id="experience">
-        <div class="section-header">
-          <h2>Experience</h2>
-          <span class="section-kicker">education & work</span>
-        </div>
-
-        <div class="experience-item">
-          <h3>Your University / Institute</h3>
-          <div class="meta">Graduate Student / Research Assistant · 2023 — Present</div>
-          <p>
-            Working on generative CAD modeling, B-rep generation, NURBS representation learning,
-            and geometric validation.
-          </p>
-        </div>
-
-        <br />
-
-        <div class="experience-item">
-          <h3>Previous Institution / Company</h3>
-          <div class="meta">Your Role · 2021 — 2023</div>
-          <p>
-            Briefly describe your previous research, engineering, or project experience here.
-          </p>
-        </div>
-      </section>
-
-      <!-- Skills -->
-      <section id="skills">
-        <div class="section-header">
-          <h2>Skills</h2>
-          <span class="section-kicker">tools & topics</span>
-        </div>
-
-        <div class="skill-list">
-          <span class="pill">Python</span>
-          <span class="pill">PyTorch</span>
-          <span class="pill">OpenCascade</span>
-          <span class="pill">CAD</span>
-          <span class="pill">B-rep</span>
-          <span class="pill">NURBS</span>
-          <span class="pill">Diffusion Models</span>
-          <span class="pill">VAE</span>
-          <span class="pill">Geometry Processing</span>
-          <span class="pill">Git</span>
-        </div>
-      </section>
-
-      <!-- Awards -->
-      <section id="awards">
-        <div class="section-header">
-          <h2>Awards</h2>
-          <span class="section-kicker">honors</span>
-        </div>
-
-        <div class="news-list">
-          <div class="news-item">
-            <div class="news-date">2026</div>
-            <p>Paper accepted by Conference / Journal Name.</p>
-          </div>
-
-          <div class="news-item">
-            <div class="news-date">2025</div>
-            <p>Scholarship / Award / Competition Prize.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- News -->
-      <section id="news">
-        <div class="section-header">
-          <h2>News</h2>
-          <span class="section-kicker">updates</span>
-        </div>
-
-        <div class="news-list">
-          <div class="news-item">
-            <div class="news-date">Jun 2026</div>
-            <p>Started working on a journal extension of our B-rep generation method.</p>
-          </div>
-
-          <div class="news-item">
-            <div class="news-date">May 2026</div>
-            <p>Released code and project page for the NURBS-based B-rep generation framework.</p>
-          </div>
-
-          <div class="news-item">
-            <div class="news-date">Apr 2026</div>
-            <p>Our paper on CAD geometry generation was accepted.</p>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        © 2026 Your Name. Built with HTML and CSS. Hosted on GitHub Pages.
-      </footer>
+      </div>
     </div>
-  </main>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════
+       EXPERIENCE
+       ═══════════════════════════════════════════════ -->
+  <section>
+    <h2>Experience</h2>
+
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="date">Jun 2026 – Present</span>
+          <span class="org">Research Institute · Hikvision </span>
+        </div>
+        <div class="exp-body">
+          <p class="exp-role">Agent Knowledge Engineering Intern</p>
+          <p class="exp-desc">
+            Building agent-oriented knowledge pipelines for multimodal specification ingestion,
+            intent-driven retrieval, graph visualization, and data platform adaptation
+            for intelligent search knowledge graphs.
+          </p>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="date">Jun 2025 – Dec 2025</span>
+          <span class="org">Youku · Alibaba</span>
+        </div>
+        <div class="exp-body">
+          <p class="exp-role">Digital Human Algorithm Engineering Intern</p>
+          <p class="exp-desc">
+            Built large-scale data processing and multi-GPU inference pipelines for portrait animation,
+            and developed audio-driven lip-sync and emotion-controllable facial animation models.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PROJECTS
+       ═══════════════════════════════════════════════ -->
+  <section>
+    <h2>Projects</h2>
+
+    <div class="project-list">
+      <div class="project-card">
+        <div class="project-head">
+          <span class="project-name">B-rep Generation Based on DiT and NURBS Parameterization</span>
+          <span class="project-badge">Accepted · CSIAM GDC 2026</span>
+        </div>
+        <p class="project-desc">
+          A B-rep generation method based on Diffusion Transformer (DiT) and NURBS parameterization, 
+          which achieves good generation diversity and post-processing efficiency with a post-processing time of only 0.15s.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PUBLICATIONS  (uncomment to activate) -->
+
+       <!-- <section>
+         <h2>Publications</h2>
+         <div class="pub-list">
+           <div class="pub-item">
+             <span class="pub-tag">Preprint</span>
+             <p class="pub-title"><a href="https://arxiv.org/abs/2605.31468" target="_blank" rel="noopener">AutoSci: A Memory-Centric Agentic System for the Full Scientific Research Lifecycle</a></p>
+             <p class="pub-authors">
+               <span class="me">Qihong Cai</span>, Beicheng Xu, …, Bin Cui <span style="color:var(--muted);font-style:italic;font-size:15px">(19 authors)</span>
+             </p>
+             <p class="pub-venue"><a href="https://arxiv.org/abs/2605.31468" target="_blank" rel="noopener">arXiv:2605.31468</a></p>
+           </div>
+         </div>
+       </section> -->
+
+  <!-- ═══════════════════════════════════════════════
+       AWARDS  (uncomment to activate) -->
+
+       <!-- <section>
+         <h2>Awards</h2>
+         <p class="awards-subhead">Competitions</p>
+         <ul class="awards-list">
+           <li><span class="year">2024</span><span>First Prize, …</span></li>
+         </ul>
+         <p class="awards-subhead awards-subhead--second">Scholarships &amp; Honors</p>
+         <ul class="awards-list">
+           <li><span class="year">2025</span><span>PKU POSCO Scholarship</span></li>
+           <li><span class="year">2024</span><span>PKU BYD Scholarship</span></li>
+           <li><span class="year">2024 / 25</span><span>PKU Merit Student</span></li>
+         </ul>
+       </section> -->
+
+  <!-- ═══════════════════════════════════════════════
+       NEWS  (uncomment to activate)
+
+       <section>
+         <h2>News</h2>
+         <ol class="news-list">
+           <li>
+             <span class="date">May 2026</span>
+             <span class="dot"></span>
+             <span class="item"><a href="https://arxiv.org/abs/2605.31468" target="_blank" rel="noopener"><strong>AutoSci</strong></a> preprint released on arXiv.</span>
+           </li>
+         </ol>
+       </section>
+       ═══════════════════════════════════════════════ -->
+
+  <!-- ═══════════════════════════════════════════════
+       FRIENDS  (uncomment to activate)
+
+       <section>
+         <h2>Friends</h2>
+         <ul class="friends-list">
+           <li><a href="http://blog.lowkeyyyy.cn/" target="_blank" rel="noopener">Lowkeyyyy @ NJU</a> <span class="note">— thoughts on software engineering, ML, and creative coding.</span></li>
+           <li><a href="https://csxq0605.github.io/" target="_blank" rel="noopener">Wangjie Su @ PKU</a> <span class="note">— interested in applying neural networks.</span></li>
+           <li><a href="https://skywalkjian-site.vercel.app/" target="_blank" rel="noopener">skywalkjian @ PKU</a> <span class="note">— majoring in computer science.</span></li>
+         </ul>
+       </section>
+       ═══════════════════════════════════════════════ -->
+
+  <footer>
+    <span>© 2026 · Qihong Cai</span>
+    <span>Dalian</span>
+  </footer>
+
+</div>
+
+<script>
+  // Update GitHub star counts in-place. Silent fallback to static count.
+  (function () {
+    const els = document.querySelectorAll('[data-stars-repo]');
+    els.forEach(async (el) => {
+      const repo = el.getAttribute('data-stars-repo');
+      const countEl = el.querySelector('.star-count');
+      if (!repo || !countEl) return;
+      try {
+        const res = await fetch('https://api.github.com/repos/' + repo, {
+          headers: { 'Accept': 'application/vnd.github+json' }
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (typeof data.stargazers_count === 'number') {
+          countEl.textContent = data.stargazers_count;
+        }
+      } catch (_) { /* keep fallback */ }
+    });
+  })();
+</script>
+
 </body>
 </html>
